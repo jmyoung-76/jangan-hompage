@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <!--
   ============================================================
-  [실습] 장안대학교 소개 홈페이지 - index.html (구조 담당)
+  [실습] 미영 교수의 코딩 강의실 - index.html (구조 담당)
   ------------------------------------------------------------
   ▶ 역할 분담 비유: "집 짓기"
      - HTML  = 뼈대(기둥, 벽, 방)         → 이 파일
      - CSS   = 인테리어(벽지, 색, 배치)    → style.css
      - JS    = 전기·가전(움직임, 반응)     → script.js
   ▶ 세 파일은 반드시 "같은 폴더"에 두어야 합니다.
-  ※ 학교 정보 출처: 한국민족문화대백과사전, 디지털화성시문화대전,
-     대학알리미 공시 (2026.10 확인). 학과·통계는 수업용 예시입니다.
+  ▶ class / id 이름은 원본과 똑같이 유지했습니다.
+     (style.css, script.js를 고치지 않아도 디자인과 기능이 그대로 동작)
+  ▶ 새로 추가된 부분: 7. 자유게시판(giscus) 섹션 + 메뉴의 "게시판" 링크
   ============================================================
 -->
 <html lang="ko">
@@ -18,7 +19,7 @@
   <meta charset="UTF-8">
   <!-- 모바일에서 화면 폭에 맞게 보이도록 설정 (반응형 필수!) -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>장안대학교 소개</title>
+  <title>미영 교수의 코딩 강의실</title>
 
   <!-- 외부 CSS 연결: href 경로가 틀리면 디자인이 전혀 적용되지 않음 -->
   <link rel="stylesheet" href="style.css">
@@ -29,18 +30,22 @@
   <header class="header" id="header">
     <div class="container header-inner">
       <!-- 로고: 클릭하면 맨 위(#home)로 이동 -->
-      <a href="#home" class="logo">장안대학교</a>
+      <a href="#home" class="logo">미영 교수 강의실</a>
 
       <!-- 모바일용 햄버거 버튼 (JS에서 클릭 이벤트 연결) -->
       <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기">☰</button>
 
       <!-- 내비게이션: href="#아이디" 는 같은 페이지 안의 섹션으로 이동 -->
+      <!-- 메뉴 이동 위치(id)는 원본과 같게 유지하고, 보이는 글자만 바꿈 -->
       <nav class="nav" id="nav">
-        <a href="#home"  class="nav-link">홈</a>
-        <a href="#about" class="nav-link">대학소개</a>
-        <a href="#history" class="nav-link">연혁</a>
-        <a href="#dept"  class="nav-link">학과안내</a>
-        <a href="#contact" class="nav-link">오시는 길</a>
+        <a href="#home"    class="nav-link">홈</a>
+        <a href="#about"   class="nav-link">교수 소개</a>
+        <a href="#history" class="nav-link">수업 로드맵</a>
+        <a href="#dept"    class="nav-link">강의 안내</a>
+        <a href="#contact" class="nav-link">연락처</a>
+        <!-- ★ 새로 추가: href의 #board 와 아래 section의 id="board" 가 같아야 이동함 -->
+        <!-- class="nav-link" 를 꼭 붙여야 다른 메뉴와 모양·동작(모바일 메뉴 닫힘 등)이 같아짐 -->
+        <a href="#board"   class="nav-link">게시판</a>
       </nav>
     </div>
   </header>
@@ -48,131 +53,160 @@
   <!-- ===================== 2. 메인 배너(히어로) ===================== -->
   <section class="hero" id="home">
     <div class="hero-content">
-      <p class="hero-sub">JANGAN UNIVERSITY</p>
-      <h1>꿈을 실현하는 <span class="highlight">실무 중심 대학</span></h1>
-      <!-- 타이핑 효과 문장이 JS로 채워질 자리 -->
+      <p class="hero-sub">JANGAN UNIVERSITY · CODING CLASS</p>
+      <h1>코드로 꿈을 만드는 <span class="highlight">실무 중심 수업</span></h1>
+      <!-- 타이핑 효과 문장이 JS로 채워질 자리 (문장 내용은 script.js에서 수정) -->
       <p class="typing" id="typing"></p>
-      <a href="#about" class="btn">대학 알아보기</a>
+      <a href="#dept" class="btn">강의 둘러보기</a>
     </div>
   </section>
 
-  <!-- ===================== 3. 대학 소개 ===================== -->
+  <!-- ===================== 3. 교수 소개 ===================== -->
   <section class="section" id="about">
     <div class="container">
-      <h2 class="section-title">대학소개</h2>
+      <h2 class="section-title">교수 소개</h2>
 
       <div class="about-grid">
         <!-- 카드 1 -->
         <div class="about-card">
           <div class="icon">🎯</div>
-          <h3>교훈</h3>
-          <p>자아실현</p>
+          <h3>수업 철학</h3>
+          <p>직접 만들어 보며 배우는<br>실무 중심·NCS 기반 수업</p>
         </div>
         <!-- 카드 2 -->
         <div class="about-card">
           <div class="icon">🏫</div>
-          <h3>설립 구분</h3>
-          <p>사립 전문대학<br>(학교법인 서림학원)</p>
+          <h3>소속</h3>
+          <p>장안대학교<br>프로그래밍·모바일 앱 강의</p>
         </div>
         <!-- 카드 3 -->
         <div class="about-card">
-          <div class="icon">📍</div>
-          <h3>위치</h3>
-          <p>경기도 화성시 봉담읍</p>
+          <div class="icon">💼</div>
+          <h3>진로 지도</h3>
+          <p>전공 상담과 취업 준비,<br>실무 역량 중심 면접 코칭</p>
         </div>
       </div>
 
       <!-- 숫자 카운터: data-target 값까지 JS가 숫자를 올려줌 -->
       <div class="stats">
         <div class="stat">
-          <span class="counter" data-target="1979">0</span>
-          <p>개교 연도</p>
+          <span class="counter" data-target="4">0</span>
+          <p>담당 과목 수</p>
         </div>
         <div class="stat">
-          <span class="counter" data-target="47">0</span>
-          <p>개교 이후 햇수(2026년 기준)</p>
+          <span class="counter" data-target="3">0</span>
+          <p>수업 언어 (Python·JavaScript·Kotlin)</p>
         </div>
         <div class="stat">
-          <span class="counter" data-target="6">0</span>
-          <p>개교 당시 학과 수</p>
+          <span class="counter" data-target="16">0</span>
+          <p>한 학기 수업 주차</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== 4. 연혁(타임라인) ===================== -->
+  <!-- ===================== 4. 수업 로드맵(타임라인) ===================== -->
+  <!-- 원본의 "연혁" 자리. 연도 대신 배우는 순서(STEP)를 표시 -->
   <section class="section bg-light" id="history">
     <div class="container">
-      <h2 class="section-title">연혁</h2>
+      <h2 class="section-title">수업 로드맵</h2>
       <ul class="timeline">
-        <li><strong>1978.12</strong> 장안실업전문대학 설립 인가</li>
-        <li><strong>1979.03</strong> 장안실업전문대학 개교 (6개 학과)</li>
-        <li><strong>1981</strong> 제1회 졸업생 배출</li>
-        <li><strong>1989</strong> 장안전문대학으로 교명 변경</li>
-        <li><strong>1998.05</strong> 장안대학으로 교명 변경</li>
-        <li><strong>2011</strong> 장안대학교로 교명 변경</li>
+        <li><strong>STEP 1</strong> 파이썬 — 변수·조건문·반복문으로 프로그래밍 사고력 기르기</li>
+        <li><strong>STEP 2</strong> 자바스크립트 — HTML·CSS 화면에 동작과 반응 입히기</li>
+        <li><strong>STEP 3</strong> 안드로이드 앱 개발 — 코틀린으로 화면 구성과 이벤트 처리</li>
+        <li><strong>STEP 4</strong> 모바일 통합구현 — 아두이노·블루투스·WiFi로 센서와 앱 연동</li>
+        <li><strong>FINAL</strong> 나만의 웹·앱 포트폴리오 완성과 취업 연계</li>
       </ul>
     </div>
   </section>
 
-  <!-- ===================== 5. 학과 안내(필터 기능) ===================== -->
+  <!-- ===================== 5. 강의 안내(필터 기능) ===================== -->
   <section class="section" id="dept">
     <div class="container">
-      <h2 class="section-title">학과안내</h2>
-      <p class="note">※ 수업 실습용 예시 데이터입니다. 실제 학과는 학교 홈페이지에서 확인하세요.</p>
+      <h2 class="section-title">강의 안내</h2>
+      <p class="note">※ 과목명과 세부 내용은 학기별 강의계획서를 기준으로 합니다.</p>
 
       <!-- 필터 버튼: data-filter 값으로 어떤 카드를 보여줄지 결정 -->
+      <!-- 버튼의 data-filter 값과 카드의 data-category 값이 "철자까지 같아야" 필터가 동작 -->
       <div class="filter-buttons">
         <button class="filter-btn active" data-filter="all">전체</button>
-        <button class="filter-btn" data-filter="it">IT·공학</button>
-        <button class="filter-btn" data-filter="biz">경영·서비스</button>
-        <button class="filter-btn" data-filter="art">예술·디자인</button>
+        <button class="filter-btn" data-filter="basic">프로그래밍 기초</button>
+        <button class="filter-btn" data-filter="web">웹</button>
+        <button class="filter-btn" data-filter="mobile">모바일 앱</button>
       </div>
 
-      <!-- 학과 카드: data-category 가 필터 값과 같으면 표시 -->
+      <!-- 강의 카드: data-category 가 필터 값과 같으면 표시 -->
       <div class="dept-grid">
-        <div class="dept-card" data-category="it">
-          <h3>소프트웨어 계열</h3><p>앱·웹 개발 실무</p>
+        <div class="dept-card" data-category="basic">
+          <h3>파이썬 프로그래밍</h3><p>기초 문법부터 데이터 처리까지</p>
         </div>
-        <div class="dept-card" data-category="it">
-          <h3>정보통신 계열</h3><p>네트워크·IoT</p>
+        <div class="dept-card" data-category="web">
+          <h3>자바스크립트</h3><p>DOM·이벤트로 만드는 인터랙티브 웹</p>
         </div>
-        <div class="dept-card" data-category="biz">
-          <h3>경영 계열</h3><p>회계·마케팅 실무</p>
+        <div class="dept-card" data-category="mobile">
+          <h3>애플리케이션개발실무</h3><p>안드로이드 스튜디오 + 코틀린 앱 개발</p>
         </div>
-        <div class="dept-card" data-category="biz">
-          <h3>관광·서비스 계열</h3><p>호텔·항공 서비스</p>
-        </div>
-        <div class="dept-card" data-category="art">
-          <h3>디자인 계열</h3><p>시각·영상 디자인</p>
-        </div>
-        <div class="dept-card" data-category="art">
-          <h3>공연예술 계열</h3><p>연기·뮤지컬</p>
+        <div class="dept-card" data-category="mobile">
+          <h3>모바일통합구현</h3><p>아두이노·IoT 센서와 모바일 앱 연동</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== 6. 오시는 길 ===================== -->
+  <!-- ===================== 6. 연락처 ===================== -->
   <section class="section bg-light" id="contact">
     <div class="container">
-      <h2 class="section-title">오시는 길</h2>
+      <h2 class="section-title">연락처</h2>
       <div class="contact-box">
-        <p>📍 <strong>주소</strong> : 경기도 화성시 봉담읍 삼천병마로 1182</p>
-        <p>📞 <strong>대표전화</strong> : 031-299-3000</p>
-        <p>🌐 <strong>홈페이지</strong> :
+        <p>🏫 <strong>강의 장소</strong> : 장안대학교 (경기도 화성시 봉담읍 삼천병마로 1182)</p>
+        <!-- ★ 아래 이메일은 예시입니다. 공개해도 되는 수업용 이메일로 바꾸세요 -->
+        <p>✉️ <strong>이메일</strong> : your-email@example.com</p>
+        <p>💬 <strong>질문·상담</strong> : 아래 자유게시판 또는 수업 시간 전후</p>
+        <p>🌐 <strong>학교 홈페이지</strong> :
           <!-- target="_blank" : 새 탭에서 열기 / rel 은 보안용 -->
           <a href="https://www.jangan.ac.kr" target="_blank" rel="noopener">www.jangan.ac.kr</a>
         </p>
-        <!-- 버튼 클릭 시 JS가 주소를 클립보드에 복사 -->
+        <!-- 버튼 클릭 시 JS가 주소를 클립보드에 복사 (복사되는 글자는 script.js에 있음) -->
         <button class="btn" id="copyBtn">주소 복사하기</button>
       </div>
     </div>
   </section>
 
-  <!-- ===================== 7. 푸터 ===================== -->
+  <!-- ===================== 7. 자유게시판 (★ 새로 추가) ===================== -->
+  <!--
+    class 규칙: 다른 섹션과 똑같이 section → container → section-title 구조 사용
+    배경 규칙: 바로 위 연락처가 bg-light(회색)이므로 여기는 bg-light 없이(흰색) 번갈아 배치
+  -->
+  <section class="section" id="board">
+    <div class="container">
+      <h2 class="section-title">자유게시판</h2>
+      <p class="note">※ GitHub 계정으로 로그인하면 질문과 의견을 남길 수 있어요.</p>
+
+      <!-- ↓↓↓ giscus.app에서 "내 저장소"로 생성한 코드를 통째로 붙여넣기 ↓↓↓ -->
+      <!-- data-repo-id, data-category-id 는 손으로 쓰지 말고 반드시 복사한 값 사용 -->
+      <script src="https://giscus.app/client.js"
+        data-repo="내아이디/저장소명"
+        data-repo-id="R_여기는_복사한_값"
+        data-category="Announcements"
+        data-category-id="DIC_여기는_복사한_값"
+        data-mapping="specific"
+        data-term="자유게시판"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang="ko"
+        crossorigin="anonymous"
+        async>
+      </script>
+      <!-- ↑↑↑ 여기까지 ↑↑↑ -->
+    </div>
+  </section>
+
+  <!-- ===================== 8. 푸터 ===================== -->
   <footer class="footer">
-    <p>&copy; <span id="year"></span> 장안대학교 소개 페이지 (수업 실습용)</p>
+    <p>&copy; <span id="year"></span> 미영 교수의 코딩 강의실 (장안대학교 수업 실습용)</p>
   </footer>
 
   <!-- 맨 위로 버튼 (스크롤을 내리면 JS가 보여줌) -->
